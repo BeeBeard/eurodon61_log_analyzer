@@ -98,6 +98,29 @@ python main.py --logs ./logs --output report.html
 
 ---
 
+
+## Запуск через Docker
+
+Сборка образа
+
+```bash
+docker build -t log_analyzer .
+```
+
+### Запуск анализа логов
+
+Windows (PowerShell)
+
+```powershell
+docker run --rm -v ${PWD}:/app log_analyzer --logs logs --output report.html
+```
+
+Linux / macOS
+
+```bash
+docker run --rm -v "$(pwd)":/app log_analyzer --logs logs --output report.html
+```
+
 ## Формат логов
 
 Поддерживаемый формат строки:
