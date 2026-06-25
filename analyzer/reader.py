@@ -16,6 +16,21 @@ class LogReader:
     def __init__(self) -> None:
         pass
 
+    @staticmethod
+    def __get_log_files(logs_path: Path) -> List[Path]:
+        if not logs_path.exists():
+            raise FileNotFoundError(f"Директория не существует: {logs_path}")
+
+        if not logs_path.is_dir():
+            raise NotADirectoryError(f"Путь не является директорией: {logs_path}")
+
+        log_files = list(logs_path.glob("*.log"))
+
+        if not log_files:
+            raise ValueError(f"Нет .log файлов в директории: {logs_path}")
+
+        return log_files
+
     def read_path(
         self,
         logs_path: Path,
@@ -28,8 +43,9 @@ class LogReader:
 
         records = []
         invalid_lines = []
+        log_files = self.__get_log_files(logs_path)
 
-        for file_path in logs_path.glob("*.log"):        # Проходим по всем *.log файлам в директории
+        for file_path in log_files:        # Проходим по всем *.log файлам в директории
             self.__read_file(
                 file_path,
                 records,
